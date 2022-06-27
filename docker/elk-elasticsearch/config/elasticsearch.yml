@@ -1,0 +1,27 @@
+---
+## Default Elasticsearch configuration from Elasticsearch base image.
+## https://github.com/elastic/elasticsearch/blob/master/distribution/docker/src/docker/config/elasticsearch.yml
+#
+cluster.name: "evo-ingress-elasticsearch-cluster"
+network.host: 0.0.0.0
+node.name: elk-elasticsearch
+
+# Use single node discovery in order to disable production mode and avoid bootstrap checks.
+# see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+discovery.type: single-node
+#      - discovery.seed_hosts=es02,es03
+#      - cluster.initial_master_nodes=es01,es02,es03
+
+## X-Pack settings
+## see https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html
+#
+xpack.license.self_generated.type: basic #trial
+xpack.monitoring.collection.enabled: true
+
+# TODO: figure out how to enforce creds
+xpack.security.enabled: false
+#xpack.security.transport.ssl.enable: false
+
+http.cors.enabled: true
+http.cors.allow-origin: '*'
+bootstrap.memory_lock: true

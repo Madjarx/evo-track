@@ -1,0 +1,6 @@
+pyvenv-foobar.*.debhelper
+pyvenv-foobar.substvars
+pyvenv-foobar/
+pyvenv-foobar-*/
+files
+debhelper-build-stamp

@@ -1,0 +1,17 @@
+#Ingress
+app/src/queue/
+
+#pychache
+*.pyc
+
+#built stuff
+dist/
+*.deb
+
+#post-build extras
+debian/.debhelper
+debian/evo-ingress*
+debian/evo-ingress/
+
+#private
+private/

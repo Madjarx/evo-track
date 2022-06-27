@@ -1,0 +1,145 @@
+{
+    "resource": "/",
+    "path": "/",
+    "httpMethod": "GET",
+    "headers": {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.9",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "dnt": "1",
+        "Host": "5bidztetcb.execute-api.us-east-1.amazonaws.com",
+        "sec-ch-ua": "\"Chromium\";v=\"88\", \"Google Chrome\";v=\"88\", \";Not A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36",
+        "Via": "2.0 f2ad9d6c3218f50a68fdbc2b2af517ab.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "Oqr52r4BPcGnzvjWslH3eNevxTQ3Y9Ws99hSzPWKTO1_2oxDpirVpA==",
+        "X-Amzn-Trace-Id": "Root=1-602b0af2-060594480b1573a746f2b62e",
+        "X-Forwarded-For": "73.109.183.145, 130.176.157.97",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Accept": [
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+        ],
+        "Accept-Encoding": [
+            "gzip, deflate, br"
+        ],
+        "Accept-Language": [
+            "en-US,en;q=0.9"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "US"
+        ],
+        "dnt": [
+            "1"
+        ],
+        "Host": [
+            "5bidztetcb.execute-api.us-east-1.amazonaws.com"
+        ],
+        "sec-ch-ua": [
+            "\"Chromium\";v=\"88\", \"Google Chrome\";v=\"88\", \";Not A Brand\";v=\"99\""
+        ],
+        "sec-ch-ua-mobile": [
+            "?0"
+        ],
+        "sec-fetch-dest": [
+            "document"
+        ],
+        "sec-fetch-mode": [
+            "navigate"
+        ],
+        "sec-fetch-site": [
+            "none"
+        ],
+        "sec-fetch-user": [
+            "?1"
+        ],
+        "upgrade-insecure-requests": [
+            "1"
+        ],
+        "User-Agent": [
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36"
+        ],
+        "Via": [
+            "2.0 f2ad9d6c3218f50a68fdbc2b2af517ab.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "Oqr52r4BPcGnzvjWslH3eNevxTQ3Y9Ws99hSzPWKTO1_2oxDpirVpA=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-602b0af2-060594480b1573a746f2b62e"
+        ],
+        "X-Forwarded-For": [
+            "73.109.183.145, 130.176.157.97"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "9r0zp44dxd",
+        "resourcePath": "/",
+        "httpMethod": "GET",
+        "extendedRequestId": "az6l-EjQIAMF0mA=",
+        "requestTime": "15/Feb/2021:23:59:46 +0000",
+        "path": "/Prod/",
+        "accountId": "159721516752",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "domainPrefix": "5bidztetcb",
+        "requestTimeEpoch": 1613433586970,
+        "requestId": "c86063a4-561d-4bad-99cd-ad46db887008",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "73.109.183.145",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36",
+            "user": null
+        },
+        "domainName": "5bidztetcb.execute-api.us-east-1.amazonaws.com",
+        "apiId": "5bidztetcb"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

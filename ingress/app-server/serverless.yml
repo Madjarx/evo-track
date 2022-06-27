@@ -1,0 +1,323 @@
+service: evo-ingress-serverless
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+  iam:
+    role:
+      statements:
+<<<<<<< HEAD
+=======
+        - Action:
+          - "ec2:DescribeNetworkInterfaces"
+          - "ec2:CreateNetworkInterface"
+          - "ec2:DeleteNetworkInterface"
+          - "ec2:DescribeInstances"
+          - "ec2:AttachNetworkInterface"
+          Resource: '*'
+          Effect: Allow
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+      # these doen't do anything (I dont know why!!)
+        - Action: 'sqs:*'
+          Effect: Allow
+          Resource: '*'
+        - Action: 'sns:*'
+          Effect: Allow
+          Resource: '*'
+        - Action:
+          - "logs:CreateLogGroup"
+          - "logs:CreateLogStream"
+          - "logs:PutLogEvents"
+          - "logs:PutMetricFilter"
+          - "logs:PutRetentionPolicy"
+          Effect: Allow
+          Resource: '*'
+
+<<<<<<< HEAD
+# layers:
+#   packages:
+#     path: node_modules
+
+=======
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+package:
+  exclude:
+    - node_modules/**
+    - lib/**
+
+functions:
+  app:
+<<<<<<< HEAD
+    handler: app.handler
+    # role: LambdaExecutionRole
+=======
+    # role: LambdaExecutionRole
+    handler: app.handler
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+    events: 
+      - http: 
+          path: /
+          method: GET
+          cors: true
+      - http: 
+          path: /ingress
+          method: POST
+          cors: true
+    layers:
+      - Fn::ImportValue: PackagesLambdaLayer
+<<<<<<< HEAD
+
+=======
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-eventinvokeconfiguration.html
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+  google-sheets:
+    handler: google-sheets-app.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - GoogleSheetsQueue
+              - Arn
+          batchSize: 1
+    layers: 
+      - Fn::ImportValue: PackagesLambdaLayer
+<<<<<<< HEAD
+
+resources:
+  Resources: 
+    # TRY SNS IF WE GET A CHANCE!!!!
+=======
+    # vpcConfig:
+    #   SecurityGroupIds:
+    #     - sg-0815c741873a81961
+    #   SubnetIds:
+    #     - subnet-a1ccebe9
+
+  elastic-search:
+    handler: elastic-search-app.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - ElasticSearchQueue
+              - Arn
+          batchSize: 1
+    layers: 
+      - Fn::ImportValue: PackagesLambdaLayer
+    vpc:
+      securityGroupIds:
+        - sg-0815c741873a81961
+      subnetIds:
+        - subnet-a1ccebe9
+    maximumRetryAttempts: 0
+    
+
+  postgres-db:
+    handler: postgres-db-app.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - PostgresDBQueue
+              - Arn
+          batchSize: 1
+    layers: 
+      - Fn::ImportValue: PackagesLambdaLayer
+    vpc:
+      securityGroupIds:
+        - sg-0815c741873a81961
+      subnetIds:
+        - subnet-a1ccebe9
+    maximumRetryAttempts: 0
+        
+  influx-db:
+    handler: influx-db-app.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - InfluxDBQueue
+              - Arn
+          batchSize: 1
+    layers: 
+      - Fn::ImportValue: PackagesLambdaLayer
+    vpc:
+      securityGroupIds:
+        - sg-0815c741873a81961
+      subnetIds:
+        - subnet-a1ccebe9
+    maximumRetryAttempts: 0
+
+        
+
+resources:
+  Resources: 
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+    GoogleSheetsQueue: 
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "GoogleSheetsQueue"
+<<<<<<< HEAD
+
+=======
+        RedrivePolicy: 
+          deadLetterTargetArn: 
+            Fn::GetAtt: 
+              - "GoogleSheetsQueueDLQ"
+              - "Arn"
+          maxReceiveCount: 3
+    
+    GoogleSheetsQueueDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "GoogleSheetsQueueDLQ"
+        MessageRetentionPeriod: 1209600
+    
+    ElasticSearchQueue: 
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "ElasticSearchQueue"
+        RedrivePolicy: 
+          deadLetterTargetArn: 
+            Fn::GetAtt: 
+              - "ElasticSearchQueueDLQ"
+              - "Arn"
+          maxReceiveCount: 3
+    
+    ElasticSearchQueueDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "ElasticSearchQueueDLQ"
+        MessageRetentionPeriod: 1209600
+
+    PostgresDBQueue: 
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "PostgresDBQueue"
+        RedrivePolicy: 
+          deadLetterTargetArn: 
+            Fn::GetAtt: 
+              - "PostgresDBQueueDLQ"
+              - "Arn"
+          maxReceiveCount: 3
+    
+    PostgresDBQueueDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "PostgresDBQueueDLQ"
+        MessageRetentionPeriod: 1209600
+      
+    InfluxDBQueue: 
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "InfluxDBQueue"
+        RedrivePolicy: 
+          deadLetterTargetArn: 
+            Fn::GetAtt: 
+              - "InfluxDBQueueDLQ"
+              - "Arn"
+          maxReceiveCount: 3
+    
+    InfluxDBQueueDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: "InfluxDBQueueDLQ"
+        MessageRetentionPeriod: 1209600
+      
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+    FanoutTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: "FanoutTopic"
+        Subscription:
+          - Endpoint:
+              Fn::GetAtt:
+                - "GoogleSheetsQueue"
+                - "Arn"
+            Protocol: "sqs"
+<<<<<<< HEAD
+=======
+          - Endpoint:
+              Fn::GetAtt:
+                - "ElasticSearchQueue"
+                - "Arn"
+            Protocol: "sqs"
+          - Endpoint:
+              Fn::GetAtt:
+                - "PostgresDBQueue"
+                - "Arn"
+            Protocol: "sqs"
+          - Endpoint:
+              Fn::GetAtt:
+                - "InfluxDBQueue"
+                - "Arn"
+            Protocol: "sqs"
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+
+    FanoutQueuePolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        Queues:
+        - Ref: GoogleSheetsQueue
+<<<<<<< HEAD
+=======
+        - Ref: ElasticSearchQueue
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: allow-sns-messages
+            Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Action: sqs:SendMessage
+<<<<<<< HEAD
+            Resource:
+              Fn::GetAtt:
+              - GoogleSheetsQueue
+              - Arn
+=======
+            Resource: 
+              'arn:aws:sqs:us-east-1::' # all sqs queues
+              # Fn::GetAtt:
+              # - GoogleSheetsQueue
+              # - Arn
+>>>>>>> 98c9bd267c02cbd883e0006e9e08604b07b20a6e
+            Condition:
+              ArnEquals:
+                aws:SourceArn:
+                  Ref: FanoutTopic
+
+    # LambdaExecutionRole:
+    #   Type: AWS::IAM::Role
+    #   Properties: 
+    #     AssumeRolePolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Principal:
+    #             Service:
+    #               - lambda.amazonaws.com
+    #           Action:
+    #             - sts:AssumeRole
+    #     Path: "/"
+    #     Policies:
+    #       - PolicyName: SQSFullAccess
+    #         PolicyDocument:
+    #           Version: "2012-10-17"
+    #           Statement: 
+    #             - Action: 'sqs:*'
+    #               Effect: Allow
+    #               Resource: '*'
+    #       - PolicyName: SNSFullAccess
+    #         PolicyDocument:
+    #           Version: "2012-10-17"
+    #           Statement: 
+    #             - Action: 'sns:*'
+    #               Effect: Allow
+    #               Resource: '*'
+
+

@@ -1,0 +1,17 @@
+version: '3.2'
+
+services:
+  node:
+#    image: "evo-track/ingress-server"
+    build:
+      dockerfile: ../../docker/ingress-server/Dockerfile  # need to go from context back to docker folder
+      context: ../../ingress/server
+    ports:
+      - "3000:3000"
+    volumes:
+      # FOR LIVE UPDATES
+      - node-sync:/app
+
+volumes: 
+  node-sync:
+    external: true

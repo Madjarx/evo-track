@@ -1,0 +1,34 @@
+<ReadyScreen>:
+    canvas:
+        Color:
+            rgba: 0, 0, 1, 0
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: "vertical"
+        padding: [50, 0, 50, 50]
+        Label:
+            size_hint: 1, 7
+            text: "Scale\nReady"
+            font_size: 180
+            bold: True
+            halign: "center"
+        Label:
+            size_hint: 1, 2
+            text: "Load #" + str(root.quantity)
+            font_size: 120
+            bold: True
+            halign: "center"
+        Button:
+#            disabled: True
+            size_hint: 1, 2
+            disabled: root.absent
+#            disabled: root.view.controller.model.weight != 0
+#            disabled: root.parent.view.controller.model.weight != 0
+
+#            text: str(root.weight)
+            text: "Start"
+            font_size: 60
+            on_press:
+                root.pressed_ready()

@@ -1,0 +1,13 @@
+{
+    "_template": "https://github.com/Springerle/dh-virtualenv-mold.git",
+    "distro": "UNRELEASED",
+    "email": "team@evoeco.com",
+    "full_name": "Moishe Keselman",
+    "package": "pyvenv-foobar",
+    "repo_name": "debian",
+    "short_description": "Watching dirs",
+    "snake": "/usr/bin/python3",
+    "url": "https://github.com/MoisheKeselman",
+    "version": "0.1.0",
+    "year": "2020"
+}

@@ -1,0 +1,11 @@
+node_modules/
+uploads/
+
+credentials.json
+token.json
+
+keys/
+
+.serverless/
+
+influx-token.txt

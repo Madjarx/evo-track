@@ -1,0 +1,128 @@
+version: '3.2'
+
+# NOTE: export ELK_VERSION="6.8.22"
+# TODO: we may be able to dockerize the Kivy app: https://github.com/andrewmk/rpi-kivy
+
+services:
+
+#region ELK
+  elk-elasticsearch:
+    build:
+      context: elasticsearch
+      args:
+        ELK_VERSION: $ELK_VERSION
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+    volumes:
+      - ./elk-elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - vol-elk-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - evo-track
+
+  elk-kibana:
+    build:
+      context: elk-kibana
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - ./elk-kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - vol-elk-kibana:/usr/share/kibana/data
+    ports:
+      - "3000:3000"
+    networks:
+      - evo-track
+    depends_on:
+      - influx-db
+#endregion
+
+#region ingress-server | ingress-client(TODO)
+ingress-server:
+  # image: "evo-track/ingress-server"
+  build:
+    dockerfile: ../../docker/ingress-server/Dockerfile  # need to go from context back to docker folder
+    context: ../ingress/server
+  ports:
+    - "3000:3000"
+  volumes:
+    # FOR LIVE UPDATES
+    # - .:/app
+    - ../ingress/server/src:/app/src
+    - ../ingress/server/app.js:/app/app.js
+    - ../ingress/server/config.js:/app/config.js
+    # - ./server/*.js:/app/
+  networks:
+    - evo-track
+  depends_on: 
+    - elk-elasticsearch
+
+  # ingress-client:
+  #   image: evo/devkit:sysd
+  #   volumes: 
+  #     - ../client:/home/ubuntu
+  #   depends_on: 
+  #     - ingress-node
+  
+  # ingress-client:
+  #   # image: jrei/systemd-ubuntu
+  #   build: 
+  #     context: ../client
+  #   tmpfs: 
+  #     - /tmp
+  #     - /run
+  #     - /run/lock
+  #   volumes: 
+  #     - ../client:/home/pi/ingress
+  #     # - ../client/evo-track.service:/etc/systemd/system
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   depends_on: 
+  #     - ingress-node
+
+  # ingress-client:
+  #   # image: jrei/systemd-ubuntu
+  #   build:
+  #     context: ../client
+  #   tmpfs:
+  #     - /tmp
+  #     - /run
+  #     - /run/lock
+  #   volumes:
+  #     - ../client:/home/pi/ingress
+  #     # - ../client/evo-track.service:/etc/systemd/system
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   depends_on:
+  #     - ingress-node
+#endregion
+  
+  mqtt-broker:
+    extends:
+      file: mqtt-broker/docker-compose.yml
+      service: mqtt-broker
+
+  node-red:
+    extends:
+      file: node-red/docker-compose.yml
+      service: node-red
+    # image: nodered/node-red:latest
+    # environment:
+    #   - TZ=America/Los_Angeles
+    # ports:
+    #   - "1880:1880"
+    volumes:
+      - ./node-red/vol-data:/data
+    networks:
+      - evo-track
+
+networks:
+  evo-track:
+    driver: bridge
+
+volumes:
+  vol-elk-elasticsearch:
+  vol-elk-kibana:

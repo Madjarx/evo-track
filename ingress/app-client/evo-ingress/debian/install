@@ -1,0 +1,4 @@
+app/configs/* etc/evo-ingress
+app/private/* etc/evo-ingress/private
+
+app/src/* lib/evoeco/evo-ingress/bin

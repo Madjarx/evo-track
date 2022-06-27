@@ -1,0 +1,14 @@
+service: evo-ingress-serverless-layer
+provider:
+  name: aws
+layers:
+  packages:
+    name: evo-ingress-packages
+    path: lib
+resources:
+  Outputs:
+    PackagesLayerExport:
+        Value:
+          Ref: PackagesLambdaLayer
+        Export:
+          Name: PackagesLambdaLayer

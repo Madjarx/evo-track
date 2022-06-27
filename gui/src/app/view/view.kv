@@ -1,0 +1,151 @@
+#: kivy 1.11
+#: import Screen kivy.uix.screenmanager.ScreenManager
+#: import ScreenManager kivy.uix.screenmanager.ScreenManager
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import ProgressHeader app.view.widgets
+#: import ScreenNub app.view.widgets
+
+<BoxedLabel>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            width: 2
+            rectangle: (self.x, self.y, self.width, self.height)
+
+<BoxedAlertBanner>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            width: 3
+            rectangle: (self.x, self.y, self.width, self.height)
+        Color:
+            rgba: 0.8, 0.7, 0, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: "horizontal"
+    padding: [10, 10, 10, 10]
+
+    BoxedLabel:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Line:
+                width: 3
+                rectangle: (self.x, self.y, self.width, self.height)
+            Color:
+                rgba: 1, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        size_hint: 0.1, 1
+        Label:
+            text: root.alert_text
+            font_size: 60
+            color: 0, 0, 0, 1
+
+    Label:
+        size_hint: 1, 1
+        text: root.text
+        font_size: 60
+        text_size: self.parent.size
+        valign: "middle"
+        halign: "center"
+        color: 0, 0, 0, 1
+
+
+<ScreenNub>:
+    canvas.before:
+        Color:
+            rgba: self.circle_color
+        Ellipse:
+            pos: self.pos
+            size: self.size
+    font_size: 30
+    color: 0, 0, 0, 1
+    bold: True
+
+<View>:
+    canvas:
+        Color:
+            rgba: 0, 0.6, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    id: view  # This is known as "root"
+    screen_manager: screen_manager
+
+    choice_screen: choice_screen
+    ready_screen: ready_screen
+    interact_screen: interact_screen
+    confirm_screen: confirm_screen
+    submit_screen: submit_screen
+    done_screen: done_screen
+
+    BoxLayout:
+        size: self.parent.size
+        orientation: "vertical"
+
+        ProgressHeader:
+            canvas:
+                Color:
+                    rgba: 69.0/255, 128.0/255, 15.0/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: 1, 1.5
+            orientation: "horizontal"
+            padding: [self.width/9, self.height/4, self.width/9, self.height/4]
+            spacing: 20
+
+            view: view
+
+            ScreenNub:
+                screen: "choice"
+            ScreenNub:
+                screen: "ready"
+            ScreenNub:
+                screen: "interact"
+            ScreenNub:
+                screen: "confirm"
+            ScreenNub:
+                screen: "submit"
+            ScreenNub:
+                screen: "done"
+
+        ScreenManager:
+            id: screen_manager
+            name: screen_manager
+            size_hint: 1, 10
+            size: self.parent.size
+#            transition: SlideTransition
+#                direction: 'left'
+
+            view: root
+
+            ChoiceScreen:
+                id: choice_screen
+                name: "choice"
+
+            ReadyScreen:
+                id: ready_screen
+                name: "ready"
+
+            InteractScreen:
+                id: interact_screen
+                name: "interact"
+
+            ConfirmScreen:
+                id: confirm_screen
+                name: "confirm"
+
+            SubmitScreen:
+                id: submit_screen
+                name: "submit"
+
+            DoneScreen:
+                id: done_screen
+                name: "done"

@@ -1,0 +1,75 @@
+<WasteTypeButton>:
+    canvas:
+        Color:
+#            rgba: self.eric
+            rgba: 0, 0, 0, 0
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    font_size: self.width * 0.1  # There may be a "hint" for this
+#    font_size: 180
+    background_normal: ''
+    background_color: self.eric
+    bold: True
+    text: self.category
+#    on_press: root.on_press(self, self.category)
+
+<ChoiceScreen>:
+    canvas:
+        Color:
+            rgba: 1, 0, 0, 0
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    manager: 'screen_manager'
+
+    # TODO: We need to dynamically insert buttons, because we don't want code changes when someone invents a new type of trash
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            size_hint: 1, 0.5
+            text: "Please select waste type:"
+            font_size: 60
+        BoxLayout:
+            orientation: "vertical"
+            padding: [50, 0, 50, 50]
+            size_hint: 1, 2
+            spacing: 50
+
+            WasteTypeButton:
+                id: Recycle
+                category: "RECYCLE"
+                on_press:
+                    root.pressed_choose(self, self.category)
+
+            WasteTypeButton:
+                id: Landfill
+                category: "LANDFILL"
+                on_press:
+                    root.pressed_choose(self, self.category)
+
+            WasteTypeButton:
+                id: Compost
+                category: "COMPOST"
+                on_press:
+                    root.pressed_choose(self, self.category)
+
+            WasteTypeButton:
+                id: Bottles
+                category: "BOTTLES"
+                on_press:
+                    root.pressed_choose(self, self.category)
+
+            WasteTypeButton:
+                id: Paper
+                category: "PAPER"
+                on_press:
+                    root.pressed_choose(self, self.category)
+
+    #            touch: "touched"  # TODO: We may not need to determine the callback name here
+    #            parent: mama
+    #            controller: mama.controller
+    #            screen: "weigh_screen"
+    #            touch_target: mama
+    #            listener: mama
+        # TODO: Somehow bind on_touch on button 1 to on_touch method on backing class

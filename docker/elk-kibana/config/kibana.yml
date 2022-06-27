@@ -1,0 +1,23 @@
+---
+## Default Kibana configuration from Kibana base image.
+## https://github.com/elastic/kibana/blob/master/src/dev/build/tasks/os_packages/docker_generator/templates/kibana_yml.template.ts
+#
+server.name: kibana
+server.host: 0.0.0.0
+elasticsearch.hosts: [ "http://elk-elasticsearch:9200" ]
+monitoring.ui.container.elasticsearch.enabled: true
+
+## X-Pack security credentials
+#
+elasticsearch.username: elastic # DEFAULT
+elasticsearch.password: changeme # DEFAULT
+# elasticsearch.username: kibana_system
+# elasticsearch.password: kib123
+# elastic: elastic123
+# apm_system: apm123
+# kibana_system: kibana123
+# logstash_system: log123
+# beats_system: beats123
+# remote_monitoring_user: rmu123
+
+#monitoring.ui.container.elasticsearch.enabled: true

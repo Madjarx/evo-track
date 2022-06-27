@@ -1,0 +1,43 @@
+#     docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
+
+# FROM: https://nodered.org/docs/getting-started/docker
+################################################################################
+# Node-RED Stack or Compose
+################################################################################
+# docker stack deploy node-red --compose-file docker-compose-node-red.yml
+# docker-compose -f docker-compose-node-red.yml -p myNoderedProject up
+################################################################################
+version: "3.7"
+
+services:
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/Los_Angeles
+    ports:
+      - "1880:1880"
+    networks:
+      - evo-track
+    volumes:
+      - vol-node-red:/data
+
+volumes:
+  vol-node-red:
+
+networks:
+  evo-track:
+
+# version: "3.7"
+
+# services:
+#   mynodered:
+#     image: nodered/node-red
+#     restart: unless-stopped
+#     volumes:
+#       - /home/pi/.node-red:/data
+#     ports:
+#       - 1880:1880
+#   mybroker:
+#     image: eclipse-mosquitto
+#     restart: unless-stopped
+#     command: mosquitto -c /mosquitto-no-auth.conf

@@ -1,0 +1,31 @@
+#!/usr/local/env bash
+
+# related to python dependencies
+alias debtools-tomlconvert="dephell deps convert --from pyproject.toml --to setup.py"
+
+
+# related to building package
+alias debtools-clean="dpkg-buildpackage -T clean "
+
+alias debtools-target="dpkg-buildpackage -T "
+
+alias debtools-build="dpkg-buildpackage"
+alias debtools-build-deps="sudo mk-build-deps --install debian/control"
+alias debtools-build-all="debtools-build-deps && debtools-build"
+
+alias debtools-inside="dpkg --contents "
+alias debtools-list="ll ../ | grep \\.deb "
+
+
+# for editting debian files
+alias debtools-edit="vim debian"
+alias debtools-edit-rules="vim debian/rules"
+
+
+# for editting this file
+alias debtools-edit-debtools="vim ~/deb-tools/aliases && source ~/.profile"
+
+
+# for adding to "changlog"
+alias debtools-nocomment='rm debian/changelog || true && dch --create --distribution UNSTABLE --package "evo-ingress" --newversion "0.1.0" "Some nice message" && cat debian/changelog'
+

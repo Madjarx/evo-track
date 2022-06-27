@@ -1,0 +1,3 @@
+# evo-track
+
+### MEMORY LEAK: DANGLING BINDS OF MODEL IN VIEW.

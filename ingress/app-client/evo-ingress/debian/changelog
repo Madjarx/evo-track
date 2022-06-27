@@ -1,0 +1,11 @@
+evo-ingress (0.1.1) UNRELEASED; urgency=medium
+
+  * curl now fails when failed post 
+
+ --  <pi@localhost>  Mon, 11 Jan 2021 17:58:00 -0800
+
+evo-ingress (0.1.0) UNSTABLE; urgency=medium
+
+  * Some nice message
+
+ --  <pi@localhost>  Thu, 31 Dec 2020 20:59:23 -0800

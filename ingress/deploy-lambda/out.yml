@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Lambda application that calls the Lambda API.
+Resources:
+  apigateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+  function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs12.x
+      CodeUri: s3://lambda-artifacts-7bf0f46692a2eccb/a284b3630183912a0a4010fd330edeab
+      Description: Call the AWS Lambda API
+      Timeout: 10
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      - AWSLambdaReadOnlyAccess
+      - AWSXrayWriteOnlyAccess
+      Tracing: Active
+      Layers:
+      - Ref: libs
+      Events:
+        MainGET:
+          Type: Api
+          Properties:
+            Method: GET
+            Path: /
+            RestApiId:
+              Ref: apigateway
+        IngressPOST:
+          Type: Api
+          Properties:
+            Method: POST
+            Path: /ingress
+            RestApiId:
+              Ref: apigateway
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: evo-ingress-lib
+      Description: Dependencies for the blank sample app.
+      ContentUri: s3://lambda-artifacts-7bf0f46692a2eccb/0b633b1b1f0b7e6370b549ce316693f8
+      CompatibleRuntimes:
+      - nodejs12.x

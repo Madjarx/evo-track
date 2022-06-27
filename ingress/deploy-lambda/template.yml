@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Lambda application that calls the Lambda API.
+Resources:
+  # trigger:
+  #   Type: AWS::ApiGatewayV2::Api
+  #   Properties:
+  #     Name: Lambda Proxy
+  #     Description: Lambda proxy using quick create
+  #     ProtocolType: HTTP
+  #     # Target: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:159721516752:function:evo-ingress-lambda-function-1LP6B66OJHXNN/invocations
+  #     Target: !GetAtt function.Arn
+  apigateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+  function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs12.x
+      CodeUri: function/.
+      Description: Call the AWS Lambda API
+      Timeout: 10
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+      Tracing: Active
+      Layers:
+        - !Ref libs
+      Events:
+        MainGET:
+          Type: Api
+          Properties:
+            Method: GET
+            Path: /
+            RestApiId:
+              Ref: apigateway
+        IngressPOST:
+          Type: Api
+          Properties:
+            Method: POST
+            Path: /ingress
+            RestApiId:
+              Ref: apigateway
+        # HttpEndpoint:
+        #   Type: HttpApi
+        #   Properties:
+        #     Method: any
+        #     Path: /
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: evo-ingress-lib
+      Description: Dependencies for the blank sample app.
+      ContentUri: lib/.
+      CompatibleRuntimes:
+        - nodejs12.x

@@ -1,0 +1,30 @@
+version: '3.2'
+
+services:
+
+  postgres:       # https://hub.docker.com/_/postgres
+    image: postgres
+    build: 
+      context: ./
+    ports:
+      - 6432:5432
+    environment: 
+      POSTGRES_DB: evo-ingress
+      POSTGRES_USER: evoeco
+      POSTGRES_PASSWORD: example
+      # PGDATA: /var/lib/postgres/data/pgdata
+      # POSTGRES_HOST_AUTH_METHOD: 'md5'
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      # POSTGRES_HOST_AUTH_METHOD: 'host all all all md5'      
+    volumes: 
+      - ./config/00-schema.sql:/docker-entrypoint-initdb.d/00-schema.sql
+      - ./config/05-data.sql:/docker-entrypoint-initdb.d/05-data.sql
+      # - ./config/10-evo-ingress-1.sql:/docker-entrypoint-initdb.d/10-evo-ingress-1.sql
+      # - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
+      # - ./docker-volume-data:/var/lib/postgres/data
+       
+  # adminer:
+  #   image: adminer
+  #   # restart: always
+  #   ports:
+  #     - 8080:8080

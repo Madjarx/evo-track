@@ -1,0 +1,29 @@
+version: '3.2'
+
+services:
+
+  stepca:
+    build:
+      context: ./
+    volumes: 
+      - ./private/ca.crt:/home/step/server/ca.crt
+      - ./private/ca.key:/home/step/secrets/ca.key
+      - ./private/password:/home/step/secrets/password
+    secrets:
+      - ca-password
+    ports: 
+      - 9000:9000
+
+# volumes: 
+#   step:
+
+# secrets are not used
+secrets:
+  ca-password:
+    file: private/password
+  ca-crt:
+    file: private/ca-server.crt
+  ca-key:
+    file: private/ca-server.key
+    
+  

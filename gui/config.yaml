@@ -1,0 +1,2 @@
+config:
+  ingress_uri: "./ingress-bucket"

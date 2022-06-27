@@ -1,0 +1,9 @@
+version: "2"
+syncs:
+  node-sync:
+    external: true
+    src: '../../ingress/server'
+    # sync_excludes: ['node_modules', 'uploads']
+    # sync_host_ip: localhost
+    sync_host_ip: 3.88.248.1
+    sync_host_port: 2375
